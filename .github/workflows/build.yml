@@ -25,6 +25,8 @@ jobs:
 
       - name: Setup bauen
         shell: powershell
+        env:
+          LUMORA_BUILD: ${{ github.run_number }}
         run: ./build/build.ps1
 
       - name: Lumora-Setup.exe ins Repo legen

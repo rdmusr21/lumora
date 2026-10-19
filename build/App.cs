@@ -35,8 +35,8 @@ namespace Lumora
 
         public MainForm()
         {
-            Text = "Lumora";
-            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            Text = "Lumora  ·  v" + Config.Version;
+            Icon =Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             BackColor = Color.FromArgb(18, 18, 22);
             StartPosition = FormStartPosition.CenterScreen;
             Size = new Size(1400, 900);
@@ -72,7 +72,7 @@ namespace Lumora
                 core.DocumentTitleChanged += (s2, e2) =>
                 {
                     var t = core.DocumentTitle;
-                    Text = string.IsNullOrEmpty(t) || t.StartsWith("https://") ? "Lumora" : t;
+                    Text = (string.IsNullOrEmpty(t) || t.StartsWith("https://") ? "Lumora" : t) + "  ·  v" + Config.Version;
                 };
                 // External links open in the default browser instead of a new WebView window
                 core.NewWindowRequested += (s2, e2) =>
@@ -95,7 +95,9 @@ namespace Lumora
             FormClosing += (s, e) => SaveWindowState();
         }
 
-        // Update when version.txt online is newer than this EXE, or the online lumora.html differs from the installed one
+        // Update when version.txt online is newer than this EXE (GitHub bumps it on every build).
+        // Without a version.txt online, fall back to comparing lumora.html with the installed one.
+        // Nothing is remembered when the user declines, so the prompt returns on the next start.
         void CheckForUpdate()
         {
             if (!Online.Enabled) return;
@@ -104,7 +106,7 @@ namespace Lumora
                 var ver = Online.TryGet("version.txt", 8000);
                 var exeUpdate = ver != null && Online.IsNewer(Encoding.UTF8.GetString(ver), Config.Version);
                 var htmlUpdate = false;
-                if (!exeUpdate)
+                if (ver == null)
                 {
                     var remote = Online.TryGet("lumora.html", 20000);
                     try { htmlUpdate = remote != null && !remote.SequenceEqual(File.ReadAllBytes(Path.Combine(appDir, "lumora.html"))); }

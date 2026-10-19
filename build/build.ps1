@@ -27,6 +27,8 @@ Get-Content "$here\update-config.txt" -Encoding UTF8 | Where-Object { $_ -match 
 $url = $cfg['url']
 if (-not $url -or $url -match 'DEIN-NAME') { $url = '' } elseif (-not $url.EndsWith('/')) { $url += '/' }
 $ver = $cfg['version']
+# On GitHub the build number becomes the last part (1.0.0 -> 1.0.<build>), so every upload is a new version
+if ($env:LUMORA_BUILD) { $ver = ($ver.Split('.')[0..1] -join '.') + '.' + $env:LUMORA_BUILD }
 @"
 [assembly: System.Reflection.AssemblyVersion("$ver.0")]
 [assembly: System.Reflection.AssemblyFileVersion("$ver.0")]
