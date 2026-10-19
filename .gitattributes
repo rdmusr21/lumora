@@ -1,0 +1,4 @@
+lumora.html -text
+*.exe binary
+*.ico binary
+*.txt -text
