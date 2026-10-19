@@ -1,4 +1,4 @@
-# Baut Lumora-Setup.exe automatisch, sobald lumora.html (oder der Build-Code) auf GitHub geändert wird.
+# Lumora: baut Lumora-Setup.exe automatisch, sobald lumora.html (oder der Build-Code) auf GitHub geändert wird.
 name: Setup bauen
 
 on:
