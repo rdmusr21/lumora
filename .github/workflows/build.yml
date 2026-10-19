@@ -1,0 +1,39 @@
+# Baut Lumora-Setup.exe automatisch, sobald lumora.html (oder der Build-Code) auf GitHub geändert wird.
+name: Setup bauen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - lumora.html
+      - build/**
+      - .github/workflows/build.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-setup
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup bauen
+        shell: powershell
+        run: ./build/build.ps1
+
+      - name: Lumora-Setup.exe ins Repo legen
+        shell: powershell
+        run: |
+          Copy-Item dist/Lumora-Setup.exe, dist/version.txt . -Force
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add Lumora-Setup.exe version.txt
+          git commit -m "Setup automatisch gebaut"
+          git pull --rebase origin main
+          git push origin HEAD:main

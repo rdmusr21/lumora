@@ -1,0 +1,11 @@
+﻿# Lumora Update-Einstellungen (Zeilen mit # werden ignoriert)
+#
+# version: bei jedem Update erhoehen, wenn sich die EXE/das Setup aendert.
+#          Fuer reine HTML-Updates musst du hier nichts aendern.
+# url:     Ordner im Internet, in dem lumora.html (und optional Lumora-Setup.exe + version.txt) liegen.
+#          GitHub-Beispiel: https://raw.githubusercontent.com/DEIN-NAME/lumora/main/
+#          Solange DEIN-NAME drinsteht, ist die Update-Suche aus.
+
+version=1.0.0
+url=https://raw.githubusercontent.com/rdmusr21/lumora/main/
+
