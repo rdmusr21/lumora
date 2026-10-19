@@ -899,7 +899,7 @@ function drawText(ctx,L,w,h){
   ctx.fillStyle=makePaint(ctx,L.fill,nw,nh)||'#000'; paint(false);
   ctx.restore();
 }
-/* ---- Formen ---- */
+/* ---- Form ---- */
 function shapePath(L,w,h){
   const p=new Path2D(); const i=L.stroke.on?L.stroke.width/2:0; const x0=i,y0=i,W=Math.max(.5,w-2*i),H=Math.max(.5,h-2*i),cx=w/2,cy=h/2;
   const poly=pts=>{ pts.forEach(([x,y],k)=>k?p.lineTo(x,y):p.moveTo(x,y)); p.closePath(); };
